@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Mahasiswa;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
@@ -28,16 +30,36 @@ class UserController extends Controller
         $emailParts = explode('@', $user->email);
         $domain = end($emailParts);
 
+        $redirectTo = "";
+        $name = "";
+    
         if ($domain === 'students.undip.ac.id') {
-            return ["redirectTo" => "dashboardmhs"];
+            $student = Mahasiswa::where('email', $req->email)->first();
+            if ($student) {
+                
+                $name = $student->nama_mhs;
+                $redirectTo = "dashboardmhs";
+            }
         } elseif ($domain === 'lecturer.undip.ac.id') {
-            return ["redirectTo" => "dashboarddosen"];
+            $lecturer = Dosen::where('email', $req->email)->first();
+            if ($lecturer) {
+                $name = $lecturer->nama_dosen;
+                $redirectTo = "dashboarddosen";
+            }
         } elseif ($domain === 'departemen.undip.ac.id') {
             return ["redirectTo" => "dashboarddepartment"];
         } elseif ($domain === 'operator.undip.ac.id') {
             return ["redirectTo" => "dashboard"];
-        }else {
+        } 
+        if ($redirectTo !== "") {
+            return [
+                "redirectTo" => $redirectTo,
+                "name" => $name // Mengirim nama ke frontend
+            ];
+        } else {
             return ["Error" => "Format email tidak sesuai"];
         }
+        
+       
     }
 }
