@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 use App\Models\TahunAjaran;
+use App\Models\MahasiswaMataKuliah;
 
 class CapaianMahasiswa extends Controller
 {
@@ -13,6 +14,7 @@ class CapaianMahasiswa extends Controller
         ->select('mk.kode_mk', 'mk.nama_mk', 'mk.sks', 'ck.id_cpl', 'cl.bobot_cpl','mk.semester_mk')
         ->join('cpmk as ck', 'mk.id_cpmk', '=', 'ck.id_cpmk')
         ->join('cpl as cl', 'ck.id_cpl', '=', 'cl.id_cpl')
+        ->join('mahasiswa_mata_kuliah as mhsmk', 'mhsmk.id_mk', '=', 'mk.id_mk')
         ->where('mk.semester_mk', $semester)
         ->get();
             

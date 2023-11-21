@@ -32,10 +32,12 @@ class UserController extends Controller
         $domain = end($emailParts);
         $redirectTo = "";
         $name = "";
+        $nim="";
     
         if ($domain === 'students.undip.ac.id' && $student) {
             $name = $student->nama_mhs;
-            return ["redirectTo" => "dashboardmhs","name" => $name];
+            $nim = $student->NIM;
+            return ["redirectTo" => "dashboardmhs","name" => $name,"nim" =>$nim] ;
         } elseif ($domain === 'lecturer.undip.ac.id' && $lecturer) {
             $name = $lecturer->nama_dosen;
             return ["redirectTo" => "dashboarddosen","name" => $name];
