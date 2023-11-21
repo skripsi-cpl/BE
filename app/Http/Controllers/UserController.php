@@ -20,8 +20,9 @@ class UserController extends Controller
     }
 
     function login(Request $req){
-            $user = User::where('email', $req->email)->first();
-
+        $user = User::where('email', $req->email)->first();
+        $student = Mahasiswa::where('email', $req->email)->first();
+        $lecturer = Dosen::where('email', $req->email)->first();
         if (!$user || !Hash::check($req->password, $user->password)) {
             return ["Error" => "Maaf, email atau password salah"];
         }
@@ -29,37 +30,21 @@ class UserController extends Controller
         // Mengekstrak domain dari alamat email pengguna
         $emailParts = explode('@', $user->email);
         $domain = end($emailParts);
-
         $redirectTo = "";
         $name = "";
     
-        if ($domain === 'students.undip.ac.id') {
-            $student = Mahasiswa::where('email', $req->email)->first();
-            if ($student) {
-                
-                $name = $student->nama_mhs;
-                $redirectTo = "dashboardmhs";
-            }
-        } elseif ($domain === 'lecturer.undip.ac.id') {
-            $lecturer = Dosen::where('email', $req->email)->first();
-            if ($lecturer) {
-                $name = $lecturer->nama_dosen;
-                $redirectTo = "dashboarddosen";
-            }
+        if ($domain === 'students.undip.ac.id' && $student) {
+            $name = $student->nama_mhs;
+            return ["redirectTo" => "dashboardmhs","name" => $name];
+        } elseif ($domain === 'lecturer.undip.ac.id' && $lecturer) {
+            $name = $lecturer->nama_dosen;
+            return ["redirectTo" => "dashboarddosen","name" => $name];
         } elseif ($domain === 'departemen.undip.ac.id') {
-            return ["redirectTo" => "dashboarddepartment"];
+            return ["redirectTo" => "dashboarddepartment","name" => $name];
         } elseif ($domain === 'operator.undip.ac.id') {
-            return ["redirectTo" => "dashboard"];
-        } 
-        if ($redirectTo !== "") {
-            return [
-                "redirectTo" => $redirectTo,
-                "name" => $name // Mengirim nama ke frontend
-            ];
-        } else {
+            return ["redirectTo" => "dashboard","name" => $name];
+        }else {
             return ["Error" => "Format email tidak sesuai"];
         }
-        
-       
     }
 }
