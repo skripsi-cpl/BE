@@ -6,6 +6,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CapaianPembelajaranController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\MataKuliahController;
+
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +34,7 @@ Route::post('login',[UserController::class,'login']);
 Route::get('dashboardmhs/pencapaian',[CapaianMahasiswa::class,'capaianmahasiswa']);
 Route::get('mahasiswa',[MahasiswaController::class,'index']);
 Route::get('dashboardmhs/filtersemester',[CapaianMahasiswa::class,'filtersemester']);
+Route::get('/mata_kuliah', [MataKuliahController::class, 'getMataKuliahBySemester']);
 Route::get('phpmyinfo', function () {
     phpinfo(); 
 })->name('phpmyinfo');
