@@ -33,7 +33,7 @@ class UserController extends Controller
         $redirectTo = "";
         $name = "";
         $nim="";
-    
+
         if ($domain === 'students.undip.ac.id' && $student) {
             $name = $student->nama_mhs;
             $nim = $student->NIM;
@@ -42,8 +42,10 @@ class UserController extends Controller
             $name = $lecturer->nama_dosen;
             return ["redirectTo" => "dashboarddosen","name" => $name];
         } elseif ($domain === 'departemen.undip.ac.id') {
+            $name = $user->email;
             return ["redirectTo" => "dashboarddepartment","name" => $name];
         } elseif ($domain === 'operator.undip.ac.id') {
+            $name = $user->email;
             return ["redirectTo" => "dashboard","name" => $name];
         }else {
             return ["Error" => "Format email tidak sesuai"];
