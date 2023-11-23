@@ -18,6 +18,7 @@ class DPNA extends Model
         'UAS',
         'nilai_angka',
         'nilai_huruf',
+        'file_upload',
     ];
 
     public function mataKuliah()
