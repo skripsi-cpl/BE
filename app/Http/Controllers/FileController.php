@@ -23,7 +23,7 @@ class FileController extends Controller
             // Simpan informasi file ke database
             FileUpload::create([
                 'file_upload' => basename($file),
-                // Tambahkan kolom-kolom lain yang mungkin Anda butuhkan
+                
             ]);
 
             return response()->json(['message' => 'File uploaded successfully']);
