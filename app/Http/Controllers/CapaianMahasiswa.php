@@ -18,6 +18,7 @@ class CapaianMahasiswa extends Controller
         ->join('mahasiswa_mata_kuliah as mhsmk', 'mhsmk.id_mk', '=', 'mk.id_mk')
         ->where('mk.semester_mk', $semester)
         ->where('mhsmk.NIM', $nim)
+        
         ->get();
             
         
