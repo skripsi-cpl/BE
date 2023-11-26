@@ -53,4 +53,76 @@ class CapaianPembelajaranController extends Controller
             'cpmk' => $capaianMatakuliah,
         ], 201); // 201 menunjukkan "Created" status code
     }
+
+    public function postDataPL(Request $request){
+        $validateData = $request->validate([
+            'id_pl' => 'required',
+            'nama_pl' => 'required',
+            'bobot_pl' => 'required',
+        ]);
+
+        $createPL = ProfileLulusan::create([
+            'id_pl' => $validateData['id_pl'],
+            'nama_pl' => $validateData['nama_pl'],
+            'bobot_pl' => $validateData['bobot_pl'],
+        ]);
+
+        return response()->json([
+            'message' => 'Data has been successfully saved!',
+            'pl' => $createPL,
+        ], 201);
+    }
+
+    public function postDataCPL(Request $request){
+        $validateData = $request->validate([
+            'id_cpl' => 'required',
+            'nama_cpl' => 'required',
+            'bobot_cpl' => 'required',
+            'id_pl' => 'required',
+        ]);
+
+        $createCPL = CapaianPembelajaran::create([
+            'id_cpl' => $validateData['id_pl'] . $validateData['id_cpl'],
+            'nama_cpl' => $validateData['nama_cpl'],
+            'bobot_cpl' => $validateData['bobot_cpl'],
+            'id_pl' => $validateData['id_pl'],
+        ]);
+
+        return response()->json([
+            'message' => 'Data has been successfully saved!',
+            'cpl' => $createCPL,
+        ], 201);
+    }
+
+    public function postDataCPMK(Request $request){
+        $validateData = $request->validate([
+            'id_cpmk' => 'required',
+            'nama_cpmk' => 'required',
+            'bobot_cpmk' => 'required',
+            'id_cpl' => 'required',
+        ]);
+
+        $createCPMK = CapaianMatakuliah::create([
+            'id_cpmk' => $validateData['id_cpl'] . $validateData['id_cpmk'] ,
+            'nama_cpmk' => $validateData['nama_cpmk'],
+            'bobot_cpmk' => $validateData['bobot_cpmk'],
+            'id_cpl' => $validateData['id_cpl'],
+        ]);
+
+        return response()->json([
+            'message' => 'Data has been successfully saved!',
+            'cpmk' => $createCPMK,
+        ], 201);
+    }
+
+    public function getDataPL(){
+        $data = ProfileLulusan::all();
+        return response()->json($data);
+    }
+    public function getDataCPL(){
+        $data = CapaianPembelajaran::join('pl','cpl.id_pl','=','pl.id_pl')
+        ->select('cpl.id_cpl','cpl.nama_cpl','cpl.bobot_cpl','pl.id_pl','pl.nama_pl')
+        ->get();
+        return response()->json($data);
+    }
 }

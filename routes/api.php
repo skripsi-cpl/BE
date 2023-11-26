@@ -30,7 +30,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('register',[UserController::class,'register']);
-Route::post('inputdataobe',[CapaianPembelajaranController::class,'inputdataobe']);
+
+
+//master data
+//get router
+Route::get('datapl',[CapaianPembelajaranController::class,'getDataPL']);
+Route::get('datacpl',[CapaianPembelajaranController::class,'getDataCPL']);
+//post router
+Route::post('datapostpl',[CapaianPembelajaranController::class,'postDataPL']);
+Route::post('datapostcpl',[CapaianPembelajaranController::class,'postDataCPL']);
+Route::post('datapostcpmk',[CapaianPembelajaranController::class,'postDataCPMK']);
+
+
+
 Route::post('login',[UserController::class,'login']);
 Route::get('dashboardmhs/pencapaian',[CapaianMahasiswa::class,'capaianmahasiswa']);
 Route::get('mahasiswa',[MahasiswaController::class,'index']);
@@ -38,5 +50,5 @@ Route::get('dashboardmhs/filtersemester',[CapaianMahasiswa::class,'filtersemeste
 Route::get('/mata_kuliah', [MataKuliahController::class, 'getMataKuliahBySemester']);
 Route::post('/upload', [FileController::class, 'upload']);
 Route::get('phpmyinfo', function () {
-    phpinfo(); 
+    phpinfo();
 })->name('phpmyinfo');

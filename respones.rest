@@ -1,0 +1,10 @@
+###
+POST http://localhost:8000/api/datapostcpmk
+Content-Type: application/json
+
+{
+    "id_cpmk": "132",
+    "nama_cpmk": "Kemampuan Berpikir Kritis",
+    "bobot_cpmk": "0.2",
+    "id_cpl": "11002"
+}
