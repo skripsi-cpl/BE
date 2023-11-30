@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Models\CapaianPembelajaran;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 use App\Models\TahunAjaran;
@@ -41,4 +43,22 @@ class CapaianMahasiswa extends Controller
         ->get();
         return $data;
     }
+    public function getIdCpl()
+    {
+        $data = CapaianPembelajaran::from('cpl')
+        ->select('id_cpl')
+        ->get();
+        return $data;
+    }
+    public function getBobotCpl()
+    {
+        $data = MataKuliah::from('mata_kuliah as mk')
+        ->select('mk.nama_mk',  'ck.id_cpl', 'cl.bobot_cpl')
+        ->join('cpmk as ck', 'mk.id_cpmk', '=', 'ck.id_cpmk')
+        ->join('cpl as cl', 'ck.id_cpl', '=', 'cl.id_cpl')
+        ->join('mahasiswa_mata_kuliah as mhsmk', 'mhsmk.id_mk', '=', 'mk.id_mk')
+        ->get();
+        return $data;
+    }
 }
+    

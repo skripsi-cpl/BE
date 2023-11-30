@@ -35,6 +35,8 @@ Route::post('login',[UserController::class,'login']);
 Route::get('dashboardmhs/pencapaian',[CapaianMahasiswa::class,'capaianmahasiswa']);
 Route::get('mahasiswa',[MahasiswaController::class,'index']);
 Route::get('dashboardmhs/filtersemester',[CapaianMahasiswa::class,'filtersemester']);
+Route::get('dashboardmhs/getIdCpl',[CapaianMahasiswa::class,'getIdCpl']);
+Route::get('dashboardmhs/getBobotCpl',[CapaianMahasiswa::class,'getBobotCpl']);
 Route::get('/mata_kuliah', [MataKuliahController::class, 'getMataKuliahBySemester']);
 Route::post('/upload', [FileController::class, 'upload']);
 Route::get('phpmyinfo', function () {
