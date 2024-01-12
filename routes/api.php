@@ -36,12 +36,14 @@ Route::post('register',[UserController::class,'register']);
 //get router
 Route::get('datapl',[CapaianPembelajaranController::class,'getDataPL']);
 Route::get('datacpl',[CapaianPembelajaranController::class,'getDataCPL']);
+Route::get('datacpmk',[CapaianPembelajaranController::class,'getDataCPMK']);
+Route::get('datamk',[CapaianPembelajaranController::class,'getDataMK']);
+Route::get('datamatakuliah',[CapaianPembelajaranController::class,'getDataMataKuliah']);
 //post router
 Route::post('datapostpl',[CapaianPembelajaranController::class,'postDataPL']);
 Route::post('datapostcpl',[CapaianPembelajaranController::class,'postDataCPL']);
 Route::post('datapostcpmk',[CapaianPembelajaranController::class,'postDataCPMK']);
-
-
+Route::post('datapostmk',[CapaianPembelajaranController::class,'postDataMK']);
 
 Route::post('login',[UserController::class,'login']);
 Route::get('dashboardmhs/pencapaian',[CapaianMahasiswa::class,'capaianmahasiswa']);
