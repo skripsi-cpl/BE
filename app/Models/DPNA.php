@@ -9,7 +9,7 @@ class DPNA extends Model
     protected $table = 'dpna';
 
     protected $fillable = [
-        'id_dpna',
+        // 'id_dpna',
         'id_mk',
         'NIM',
         'tugas',

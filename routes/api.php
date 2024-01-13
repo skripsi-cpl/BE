@@ -8,7 +8,8 @@ use App\Http\Controllers\CapaianPembelajaranController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\FileController;
-
+use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\TahunAjaranController;
 
 
 
@@ -54,6 +55,8 @@ Route::get('dashboardmhs/getIdCpl',[CapaianMahasiswa::class,'getIdCpl']);
 Route::get('dashboardmhs/getBobotCpl',[CapaianMahasiswa::class,'getBobotCpl']);
 Route::get('/mata_kuliah', [MataKuliahController::class, 'getMataKuliahBySemester']);
 Route::post('/upload', [FileController::class, 'upload']);
+Route::get('/tahun-ajaran-data', [TahunAjaranController::class, 'index']);
+Route::post('/upload-nilai', [NilaiController::class, 'upload']);
 Route::get('phpmyinfo', function () {
     phpinfo();
 })->name('phpmyinfo');
