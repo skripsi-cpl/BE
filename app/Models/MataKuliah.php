@@ -22,10 +22,10 @@ class MataKuliah extends Model
     {
         return $this->belongsTo(Kurikulum::class, 'id_kurikulum', 'id_kurikulum');
     }
-    public function cpmk()
-    {
-        return $this->belongsTo(CPL::class, 'id_cpmk', 'id_cpmk');
-    }
+    // public function cpmk()
+    // {
+    //     return $this->belongsTo(CPL::class, 'id_cpmk', 'id_cpmk');
+    // }
 
     public $timestamps = false;
 }
