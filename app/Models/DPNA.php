@@ -12,6 +12,7 @@ class DPNA extends Model
         // 'id_dpna',
         'id_mk',
         'NIM',
+        'kelas',
         'tugas',
         'praktikum',
         'UTS',
@@ -19,6 +20,7 @@ class DPNA extends Model
         'nilai_angka',
         'nilai_huruf',
         'file_upload',
+        'status'
     ];
 
     public function mataKuliah()

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Models\Dpna; // Model untuk tabel 'dpna'
+use App\Models\Status;
+use App\Models\Trxdpna; // Model untuk tabel 'trxdpna'
 
 class NilaiController extends Controller
 {
@@ -13,10 +15,13 @@ class NilaiController extends Controller
         $file = $request->file('file');
         $spreadsheet = IOFactory::load($file->getPathName());
         $worksheet = $spreadsheet->getActiveSheet();
-
+        $idMk = $request->input('id_mk');
         $kelas = $worksheet->getCell('B4')->getValue();
-        $kelas = str_replace(':', '', $kelas); // Menghilangkan tanda ":"
+        $kelas = $request->input('nama_kelas');
         
+        $status = DPNA::where('id_mk', $idMk)
+            ->where('kelas', $kelas)
+            ->exists();
         for ($row = 8; $row <= $worksheet->getHighestRow(); $row++) {
             // Baca data dari setiap baris
             $nim = $worksheet->getCell('A' . $row)->getValue();
@@ -26,12 +31,13 @@ class NilaiController extends Controller
             $uas = $worksheet->getCell('H' . $row)->getCalculatedValue();
             $nilai_angka = $worksheet->getCell('I' . $row)->getCalculatedValue();
             $nilai_huruf = $worksheet->getCell('J' . $row)->getCalculatedValue();
-
+            
             // Konversi nilai ke numerik jika perlu
             $nilai_angka = is_numeric($nilai_angka) ? floatval($nilai_angka) : 0;
 
             // Membuat record baru di database
             $dpna = new Dpna([
+                'id_mk' => $idMk, // Sesuaikan dengan kolom di tabel 'dpna
                 'NIM' => $nim,
                 'kelas' => $kelas,
                 'tugas' => $tugas,
@@ -40,13 +46,25 @@ class NilaiController extends Controller
                 'UAS' => $uas,
                 'nilai_angka' => $nilai_angka,
                 'nilai_huruf' => $nilai_huruf,
-                'status' => "SUDAH",
+                'status' => 'Sudah',
                 // 'status' dan 'waktu_upload' diisi sesuai kebutuhan
             ]);
             $dpna->save();
+             // Ambil id baru yang telah disimpan di dpna
+             $id_dpna = $dpna->id;
+
+             // Simpan id_dpna ke tabel trxdpna
+             $trxdpna = new Trxdpna([
+                 'id_dpna' => $id_dpna,
+                 // Tambahkan kolom-kolom lain yang sesuai
+             ]);
+             $trxdpna->save();
+            //  Status::where('id_status', 1)->update(['nama_status' => 'sudah']);
         }
 
-        return response()->json(['message' => 'Data berhasil diupload']);
+        return response()->json(
+            ['message' => 'Data berhasil diupload']
+        );
     }
 }
 
