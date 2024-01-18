@@ -8,12 +8,11 @@ use App\Http\Controllers\CapaianPembelajaranController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TahunAjaranController;
-
-
-
-
+use App\Http\Controllers\UploadStatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +46,7 @@ Route::post('datapostcpmk',[CapaianPembelajaranController::class,'postDataCPMK']
 Route::post('datapostmk',[CapaianPembelajaranController::class,'postDataMK']);
 
 Route::post('login',[UserController::class,'login']);
+
 Route::get('dashboardmhs/pencapaian',[CapaianMahasiswa::class,'capaianmahasiswa']);
 Route::get('mahasiswa',[MahasiswaController::class,'index']);
 Route::get('mahasiswa/indexTa',[MahasiswaController::class,'indexTa']);
@@ -56,6 +56,9 @@ Route::get('dashboardmhs/getBobotCpl',[CapaianMahasiswa::class,'getBobotCpl']);
 Route::get('/mata_kuliah', [MataKuliahController::class, 'getMataKuliahBySemester']);
 Route::post('/upload', [FileController::class, 'upload']);
 Route::get('/tahun-ajaran-data', [TahunAjaranController::class, 'index']);
+Route::get('/kelas', [KelasController::class, 'index']);
+Route::get('/status', [StatusController::class, 'index']);
+Route::get('/cek-status-upload', [UploadStatusController::class, 'checkStatus']);
 Route::post('/upload-nilai', [NilaiController::class, 'upload']);
 Route::get('phpmyinfo', function () {
     phpinfo();
