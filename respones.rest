@@ -8,3 +8,37 @@ Content-Type: application/json
     "bobot_cpmk": "0.2",
     "id_cpl": "11002"
 }
+
+
+###
+POST http://localhost:8000/api/login
+content-type: application/json
+
+{
+    "email": "dany@students.undip.ac.id",
+    "password": "dany1234"
+}
+###
+POST http://localhost:8000/api/login
+content-type: application/json
+
+{
+    "email": "arispujiwidodo@lecturer.undip.ac.id",
+    "password": "aris1234"
+}
+###
+POST http://localhost:8000/api/login
+content-type: application/json
+
+{
+    "email": "operator@operator.undip.ac.id",
+    "password": "operator1234"
+}
+###
+POST http://localhost:8000/api/login
+content-type: application/json
+
+{
+    "email": "if_departemen@departemen.undip.ac.id",
+    "password": "departemen1234"
+}

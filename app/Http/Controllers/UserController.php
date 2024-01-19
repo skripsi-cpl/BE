@@ -37,16 +37,16 @@ class UserController extends Controller
         if ($domain === 'students.undip.ac.id' && $student) {
             $name = $student->nama_mhs;
             $nim = $student->NIM;
-            return ["redirectTo" => "dashboardmhs","name" => $name,"nim" =>$nim] ;
+            return ["redirectTo" => "dashboardmhs","name" => $name,"nim" =>$nim ,"role" => "mahasiswa"] ;
         } elseif ($domain === 'lecturer.undip.ac.id' && $lecturer) {
             $name = $lecturer->nama_dosen;
-            return ["redirectTo" => "dashboarddosen","name" => $name];
+            return ["redirectTo" => "dashboarddosen","name" => $name, "role" => "dosen"];
         } elseif ($domain === 'departemen.undip.ac.id') {
             $name = $user->email;
-            return ["redirectTo" => "dashboarddepartment","name" => $name];
+            return ["redirectTo" => "dashboarddepartment","name" => $name, "role" => "departemen"];
         } elseif ($domain === 'operator.undip.ac.id') {
             $name = $user->email;
-            return ["redirectTo" => "dashboard","name" => $name];
+            return ["redirectTo" => "dashboard","name" => $name, "role" => "operator"];
         }else {
             return ["Error" => "Format email tidak sesuai"];
         }
