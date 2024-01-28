@@ -10,6 +10,7 @@ class DPNA extends Model
 
     protected $fillable = [
         // 'id_dpna',
+        'id_TA',
         'id_mk',
         'NIM',
         'kelas',
@@ -21,6 +22,7 @@ class DPNA extends Model
         'nilai_huruf',
         'file_upload',
         'status'
+        
     ];
 
     public function mataKuliah()
