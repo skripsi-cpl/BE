@@ -13,7 +13,7 @@ class FileController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,csv|max:10240', // Maksimum 10 MB
+            'file' => 'required|mimes:xlsx,csv|max:10240', 
         ]);
 
         try {

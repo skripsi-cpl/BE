@@ -18,7 +18,8 @@ class NilaiController extends Controller
         $idMk = $request->input('id_mk');
         $kelas = $worksheet->getCell('B4')->getValue();
         $kelas = $request->input('nama_kelas');
-        
+        $idTA = $request->input('id_TA');
+
         $status = DPNA::where('id_mk', $idMk)
             ->where('kelas', $kelas)
             ->exists();
@@ -36,8 +37,9 @@ class NilaiController extends Controller
             $nilai_angka = is_numeric($nilai_angka) ? floatval($nilai_angka) : 0;
 
             // Membuat record baru di database
-            $dpna = new Dpna([
-                'id_mk' => $idMk, // Sesuaikan dengan kolom di tabel 'dpna
+            $dpna = new DPNA([
+                'id_mk' => $idMk,
+                'id_TA' => $idTA,
                 'NIM' => $nim,
                 'kelas' => $kelas,
                 'tugas' => $tugas,
@@ -47,9 +49,10 @@ class NilaiController extends Controller
                 'nilai_angka' => $nilai_angka,
                 'nilai_huruf' => $nilai_huruf,
                 'status' => 'Sudah',
-                // 'status' dan 'waktu_upload' diisi sesuai kebutuhan
+                 // Menambahkan id_TA ke dalam data yang akan disimpan
             ]);
             $dpna->save();
+            
              // Ambil id baru yang telah disimpan di dpna
              $id_dpna = $dpna->id;
 

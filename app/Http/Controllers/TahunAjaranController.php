@@ -8,7 +8,7 @@ class TahunAjaranController extends Controller
 {
     public function index()
     {
-        $tahunAjaran = TahunAjaran::all('periode');
+        $tahunAjaran = TahunAjaran::all();
         return response()->json($tahunAjaran);
     }
 }

@@ -53,12 +53,13 @@ Route::get('mahasiswa/indexTa',[MahasiswaController::class,'indexTa']);
 Route::get('dashboardmhs/filtersemester',[CapaianMahasiswa::class,'filtersemester']);
 Route::get('dashboardmhs/getIdCpl',[CapaianMahasiswa::class,'getIdCpl']);
 Route::get('dashboardmhs/getBobotCpl',[CapaianMahasiswa::class,'getBobotCpl']);
-Route::get('/mata_kuliah', [MataKuliahController::class, 'getMataKuliahBySemester']);
-Route::post('/upload', [FileController::class, 'upload']);
+Route::get('/mataKuliahBySemesterType', [MataKuliahController::class, 'getMataKuliahBySemesterType']);
+Route::post('/upload', [NilaiController::class, 'upload']);
 Route::get('/tahun-ajaran-data', [TahunAjaranController::class, 'index']);
 Route::get('/kelas', [KelasController::class, 'index']);
 Route::get('/status', [StatusController::class, 'index']);
 Route::get('/cek-status-upload', [UploadStatusController::class, 'checkStatus']);
+Route::get('/kelas-with-status', [KelasController::class, 'getKelasWithStatus']);
 Route::post('/upload-nilai', [NilaiController::class, 'upload']);
 Route::get('phpmyinfo', function () {
     phpinfo();
