@@ -46,7 +46,7 @@ Route::post('datapostcpmk',[CapaianPembelajaranController::class,'postDataCPMK']
 Route::post('datapostmk',[CapaianPembelajaranController::class,'postDataMK']);
 
 Route::post('login',[UserController::class,'login']);
-
+Route::get('/dashboarddosen/capaianpembelajaran/{nim}',[MahasiswaController::class,'getMahasiswa']);
 Route::get('dashboardmhs/pencapaian',[CapaianMahasiswa::class,'capaianmahasiswa']);
 Route::get('mahasiswa',[MahasiswaController::class,'index']);
 Route::get('mahasiswa/indexTa',[MahasiswaController::class,'indexTa']);
