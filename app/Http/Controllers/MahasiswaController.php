@@ -42,6 +42,10 @@ class MahasiswaController extends Controller
     
     return response()->json($mataKuliah);
 }
+public function getMahasiswa($nim) {
+    $mahasiswa = Mahasiswa::where('nim', $nim)->first();
+    return response()->json($mahasiswa);
+}
 
 
 
