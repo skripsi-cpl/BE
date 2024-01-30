@@ -9,6 +9,7 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TahunAjaranController;
@@ -44,6 +45,10 @@ Route::post('datapostpl',[CapaianPembelajaranController::class,'postDataPL']);
 Route::post('datapostcpl',[CapaianPembelajaranController::class,'postDataCPL']);
 Route::post('datapostcpmk',[CapaianPembelajaranController::class,'postDataCPMK']);
 Route::post('datapostmk',[CapaianPembelajaranController::class,'postDataMK']);
+Route::post('datapostta',[TahunAjaranController::class,'postDataTahunAjaran']);
+Route::post('datapostkurikulum',[KurikulumController::class,'postDataKurikulum']);
+
+
 
 Route::post('login',[UserController::class,'login']);
 Route::get('/dashboarddosen/capaianpembelajaran/{nim}',[MahasiswaController::class,'getMahasiswa']);
@@ -64,3 +69,4 @@ Route::post('/upload-nilai', [NilaiController::class, 'upload']);
 Route::get('phpmyinfo', function () {
     phpinfo();
 })->name('phpmyinfo');
+
