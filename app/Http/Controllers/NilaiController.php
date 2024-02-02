@@ -57,11 +57,11 @@ class NilaiController extends Controller
              $id_dpna = $dpna->id;
 
              // Simpan id_dpna ke tabel trxdpna
-             $trxdpna = new Trxdpna([
-                 'id_dpna' => $id_dpna,
-                 // Tambahkan kolom-kolom lain yang sesuai
-             ]);
-             $trxdpna->save();
+            //  $trxdpna = new Trxdpna([
+            //      'id_dpna' => $id_dpna,
+            //      // Tambahkan kolom-kolom lain yang sesuai
+            //  ]);
+            //  $trxdpna->save();
             //  Status::where('id_status', 1)->update(['nama_status' => 'sudah']);
         }
 
