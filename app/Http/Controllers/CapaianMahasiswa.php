@@ -39,7 +39,7 @@ class CapaianMahasiswa extends Controller
     public function filtersemester()
     {
         $data = TahunAjaran::from('tahun_ajaran')
-        ->select('semester_TA')
+        ->select('id_TA')
         ->get();
         return $data;
     }
