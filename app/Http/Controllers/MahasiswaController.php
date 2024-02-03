@@ -12,7 +12,7 @@ class MahasiswaController extends Controller
     {
         $data = Mahasiswa::from('mahasiswa as mhs')
         ->select('*')
-        ->join('tahun_ajaran as ta', 'mhs.semester_TA', '=', 'ta.semester_TA')
+        ->join('tahun_ajaran as ta', 'mhs.id_TA', '=', 'ta.id_TA')
         ->get();
         return $data;
     }
@@ -20,7 +20,7 @@ class MahasiswaController extends Controller
     {
         $data = Mahasiswa::from('mahasiswa as mhs')
         ->select('mhs.NIM', 'mhs.nama_mhs', 'mhs.tahun_masuk','ta.periode')
-        ->join('tahun_ajaran as ta', 'mhs.semester_TA', '=', 'ta.semester_TA')
+        ->join('tahun_ajaran as ta', 'mhs.id_TA', '=', 'ta.id_TA')
         ->get();
         return $data;
     }
