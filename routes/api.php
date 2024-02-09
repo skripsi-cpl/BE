@@ -66,7 +66,7 @@ Route::get('/status', [StatusController::class, 'index']);
 Route::get('/cek-status-upload', [UploadStatusController::class, 'checkStatus']);
 Route::get('/kelas-with-status', [KelasController::class, 'getKelasWithStatus']);
 Route::post('/upload-nilai', [NilaiController::class, 'upload']);
+Route::get('/hitung_cpl', [NilaiController::class, 'hitungCPL']);
 Route::get('phpmyinfo', function () {
     phpinfo();
 })->name('phpmyinfo');
-

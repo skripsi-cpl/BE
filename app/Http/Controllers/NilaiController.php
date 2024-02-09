@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CpmkMk;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Models\Dpna; // Model untuk tabel 'dpna'
@@ -15,59 +16,62 @@ class NilaiController extends Controller
         $file = $request->file('file');
         $spreadsheet = IOFactory::load($file->getPathName());
         $worksheet = $spreadsheet->getActiveSheet();
-        $idMk = $request->input('id_mk');
-        $kelas = $worksheet->getCell('B4')->getValue();
         $kelas = $request->input('nama_kelas');
         $idTA = $request->input('id_TA');
 
-        $status = DPNA::where('id_mk', $idMk)
-            ->where('kelas', $kelas)
-            ->exists();
-        for ($row = 8; $row <= $worksheet->getHighestRow(); $row++) {
-            // Baca data dari setiap baris
-            $nim = $worksheet->getCell('A' . $row)->getValue();
-            $tugas = $worksheet->getCell('E' . $row)->getCalculatedValue();
-            $praktikum = $worksheet->getCell('F' . $row)->getCalculatedValue();
-            $uts = $worksheet->getCell('G' . $row)->getCalculatedValue();
-            $uas = $worksheet->getCell('H' . $row)->getCalculatedValue();
-            $nilai_angka = $worksheet->getCell('I' . $row)->getCalculatedValue();
-            $nilai_huruf = $worksheet->getCell('J' . $row)->getCalculatedValue();
-            
-            // Konversi nilai ke numerik jika perlu
-            $nilai_angka = is_numeric($nilai_angka) ? floatval($nilai_angka) : 0;
+        // Dapatkan daftar id_mk terkait dengan id_mk yang diterima
+        // Memastikan bahwa id_mk hanya diproses sekali
+        $idMkList = CpmkMk::where('id_mk', $request->input('id_mk'))->pluck('id_mk')->unique()->toArray();
 
-            // Membuat record baru di database
-            $dpna = new DPNA([
-                'id_mk' => $idMk,
-                'id_TA' => $idTA,
-                'NIM' => $nim,
-                'kelas' => $kelas,
-                'tugas' => $tugas,
-                'praktikum' => $praktikum,
-                'UTS' => $uts,
-                'UAS' => $uas,
-                'nilai_angka' => $nilai_angka,
-                'nilai_huruf' => $nilai_huruf,
-                'status' => 'Sudah',
-                 // Menambahkan id_TA ke dalam data yang akan disimpan
-            ]);
-            $dpna->save();
+        foreach ($idMkList as $idMk) {
+            // Dapatkan semua id_cpmk_mk terkait dengan id_mk saat ini
+            $idCpmkMkList = CpmkMk::where('id_mk', $idMk)->pluck('id_cpmk_mk')->toArray();
             
-             // Ambil id baru yang telah disimpan di dpna
-             $id_dpna = $dpna->id;
+            // Buat variabel untuk menyimpan data per baris yang akan di-insert ke database
+            $rowData = [];
 
-             // Simpan id_dpna ke tabel trxdpna
-            //  $trxdpna = new Trxdpna([
-            //      'id_dpna' => $id_dpna,
-            //      // Tambahkan kolom-kolom lain yang sesuai
-            //  ]);
-            //  $trxdpna->save();
-            //  Status::where('id_status', 1)->update(['nama_status' => 'sudah']);
+            for ($row = 8; $row <= $worksheet->getHighestRow(); $row++) {
+                // Baca data dari setiap baris
+                $nim = $worksheet->getCell('A' . $row)->getValue();
+                $tugas = $worksheet->getCell('E' . $row)->getCalculatedValue();
+                $praktikum = $worksheet->getCell('F' . $row)->getCalculatedValue();
+                $uts = $worksheet->getCell('G' . $row)->getCalculatedValue();
+                $uas = $worksheet->getCell('H' . $row)->getCalculatedValue();
+                $nilai_angka = $worksheet->getCell('I' . $row)->getCalculatedValue();
+                $nilai_huruf = $worksheet->getCell('J' . $row)->getCalculatedValue();
+
+                // Konversi nilai ke numerik jika perlu
+                $nilai_angka = is_numeric($nilai_angka) ? floatval($nilai_angka) : 0;
+
+                // Membuat instance model DPNA untuk setiap baris data
+                foreach ($idCpmkMkList as $idCpmkMk) {
+                    $dpna = new Dpna();
+                    $dpna->id_mk = $idMk;
+                    $dpna->id_TA = $idTA;
+                    $dpna->NIM = $nim;
+                    $dpna->kelas = $kelas;
+                    $dpna->tugas = $tugas;
+                    $dpna->praktikum = $praktikum;
+                    $dpna->UTS = $uts;
+                    $dpna->UAS = $uas;
+                    $dpna->nilai_angka = $nilai_angka;
+                    $dpna->nilai_huruf = $nilai_huruf;
+                    $dpna->status = 'Sudah';
+                    $dpna->id_cpmk_mk = $idCpmkMk;
+
+                    // Simpan instance model DPNA
+                    $dpna->save();
+                }
+            }
         }
 
-        return response()->json(
-            ['message' => 'Data berhasil diupload']
-        );
+        return response()->json(['message' => 'Data berhasil diupload']);
+    }
+    public function hitungCPL(){
+        $data = CpmkMk::join('cpmk','cpmk_mk.id_cpmk','=','cpmk.id_cpmk')
+        ->join('mata_kuliah','cpmk_mk.id_mk','=','mata_kuliah.id_mk')
+        ->select('cpmk.id_cpmk','cpmk.bobot_cpmk','mata_kuliah.id_mk','cpmk_mk.id_cpmk_mk','cpmk_mk.bobot_mk')
+        ->get();
+        return response()->json($data);
     }
 }
-
