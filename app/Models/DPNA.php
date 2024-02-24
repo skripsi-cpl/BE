@@ -56,28 +56,34 @@ class DPNA extends Model
         $mata_kuliah = MataKuliah::where('id_mk', $this->id_mk)->first();
         $cpmkmk = CpmkMk::where('id_cpmk_mk', $this->id_cpmk_mk)->first();
 
-        // Ambil id_cpmk dari CpmkMk
         $id_cpmk = $cpmkmk->id_cpmk;
 
-        // Cari Cpmk berdasarkan id_cpmk
         $cpmk = CapaianMatakuliah::where('id_cpmk', $id_cpmk)->first();
         $id_cpl = $cpmk->id_cpl;
-        $bobot_mk = $cpmkmk->bobot_mk;
-        $nilai_bobot_mk = $this->nilai_angka * $bobot_mk;
-
-
-        // Cari Capaian Pembelajaran berdasarkan id_cpl
         $capaian_pembelajaran = CapaianPembelajaran::where('id_cpl', $id_cpl)->first();
-        $bobot_cpmk = $cpmk->bobot_cpmk;
-        // Ambil id_pl dari Capaian Pembelajaran
+        // Ambil id_cpmk dari CpmkMk
         $id_pl = $capaian_pembelajaran->id_pl;
-
-
         $kode_wali = $mahasiswa->kode_wali;
         $id_kurikulum = $mata_kuliah->id_kurikulum;
         $id_TA = $mahasiswa->id_TA;
         $id_cpmk_mk = $cpmkmk->id_cpmk_mk;
-        $nilai_cpl = $this->nilai_angka * $bobot_mk * $bobot_cpmk;
+
+        // Cari Cpmk berdasarkan id_cpmk
+        $bobot_cpl = $capaian_pembelajaran->bobot_cpl;
+        $bobot_cpmk = $cpmk->bobot_cpmk;
+        $bobot_mk = $cpmkmk->bobot_mk;
+
+        $nilai_bobot_mk = $this->nilai_angka * $bobot_mk;
+
+        $total_bobot_mk = CpmkMk::where('id_cpmk', $id_cpmk)->sum('bobot_mk');
+        $total_bobot_cpmk = CapaianMatakuliah::where('id_cpl', $id_cpl)->sum('bobot_cpmk');
+
+        $nilai_mk = $nilai_bobot_mk / $total_bobot_mk;
+        $nilai_bobot_cpmk = $nilai_mk * $bobot_cpmk;
+
+        $total_nilai_cpmk = $nilai_bobot_cpmk / $total_bobot_cpmk;
+        $nilai_cpl = ($total_nilai_cpmk * $bobot_cpl) / 100;
+
 
         // Buat record baru di tabel Trxdpna
         Trxdpna::create([
