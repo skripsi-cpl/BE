@@ -14,6 +14,7 @@ use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\UploadStatusController;
+use App\Http\Controllers\TrxdpnaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,7 @@ Route::get('mahasiswa',[MahasiswaController::class,'index']);
 Route::get('mahasiswa/indexTa',[MahasiswaController::class,'indexTa']);
 Route::get('dashboardmhs/filtersemester',[CapaianMahasiswa::class,'filtersemester']);
 Route::get('dashboardmhs/getIdCpl',[CapaianMahasiswa::class,'getIdCpl']);
+Route::get('/cpl-by-nim', [TrxdpnaController::class, 'getCPLByNIM']);
 Route::get('dashboardmhs/getBobotCpl',[CapaianMahasiswa::class,'getBobotCpl']);
 Route::get('/mataKuliahBySemesterType', [MataKuliahController::class, 'getMataKuliahBySemesterType']);
 Route::post('/upload', [NilaiController::class, 'upload']);
