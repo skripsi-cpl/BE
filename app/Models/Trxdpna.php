@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Trxdpna extends Model
 {
@@ -42,5 +43,14 @@ class Trxdpna extends Model
         return $this->belongsTo(Dosen::class, 'kode_wali', 'kode_wali');
     }
 
+    public function getMahasiswaCPL()
+    {
+        // Mengambil total nilai_cpl dari tabel trxdpna untuk setiap mahasiswa
+        $mahasiswaCPL = Trxdpna::select('NIM', DB::raw('SUM(nilai_cpl) as total_cpl'))
+                        ->groupBy('NIM')
+                        ->get();
+
+        return response()->json($mahasiswaCPL);
+    }
     public $timestamps = false;
 }

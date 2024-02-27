@@ -14,6 +14,7 @@ use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\UploadStatusController;
+use App\Http\Controllers\TrxdpnaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,7 @@ Route::post('datapostkurikulum', [KurikulumController::class, 'postDataKurikulum
 
 
 
+
 Route::post('login', [UserController::class, 'login']);
 Route::get('/dashboarddosen/capaianpembelajaran/{nim}', [MahasiswaController::class, 'getMahasiswa']);
 Route::get('dashboardmhs/pencapaian', [CapaianMahasiswa::class, 'capaianmahasiswa']);
@@ -59,6 +61,7 @@ Route::get('mahasiswa/indexTa', [MahasiswaController::class, 'indexTa']);
 Route::get('dashboardmhs/filtersemester', [CapaianMahasiswa::class, 'filtersemester']);
 Route::get('dashboardmhs/getIdCpl', [CapaianMahasiswa::class, 'getIdCpl']);
 Route::get('dashboardmhs/getBobotCpl', [CapaianMahasiswa::class, 'getBobotCpl']);
+
 Route::get('/mataKuliahBySemesterType', [MataKuliahController::class, 'getMataKuliahBySemesterType']);
 Route::post('/upload', [NilaiController::class, 'upload']);
 Route::get('/tahun-ajaran-data', [TahunAjaranController::class, 'index']);
