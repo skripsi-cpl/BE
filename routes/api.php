@@ -30,34 +30,35 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('register',[UserController::class,'register']);
+Route::post('register', [UserController::class, 'register']);
 
 
 //master data
 //get router
-Route::get('datapl',[CapaianPembelajaranController::class,'getDataPL']);
-Route::get('datacpl',[CapaianPembelajaranController::class,'getDataCPL']);
-Route::get('datacpmk',[CapaianPembelajaranController::class,'getDataCPMK']);
-Route::get('datamk',[CapaianPembelajaranController::class,'getDataMK']);
-Route::get('datamatakuliah',[CapaianPembelajaranController::class,'getDataMataKuliah']);
+Route::get('datapl', [CapaianPembelajaranController::class, 'getDataPL']);
+Route::get('datacpl', [CapaianPembelajaranController::class, 'getDataCPL']);
+Route::get('datacpmk', [CapaianPembelajaranController::class, 'getDataCPMK']);
+Route::get('datamk', [CapaianPembelajaranController::class, 'getDataMK']);
+Route::get('datamatakuliah', [CapaianPembelajaranController::class, 'getDataMataKuliah']);
 //post router
-Route::post('datapostpl',[CapaianPembelajaranController::class,'postDataPL']);
-Route::post('datapostcpl',[CapaianPembelajaranController::class,'postDataCPL']);
-Route::post('datapostcpmk',[CapaianPembelajaranController::class,'postDataCPMK']);
-Route::post('datapostmk',[CapaianPembelajaranController::class,'postDataMK']);
-Route::post('datapostta',[TahunAjaranController::class,'postDataTahunAjaran']);
-Route::post('datapostkurikulum',[KurikulumController::class,'postDataKurikulum']);
+Route::post('datapostpl', [CapaianPembelajaranController::class, 'postDataPL']);
+Route::post('datapostcpl', [CapaianPembelajaranController::class, 'postDataCPL']);
+Route::post('datapostcpmk', [CapaianPembelajaranController::class, 'postDataCPMK']);
+Route::post('datapostmk', [CapaianPembelajaranController::class, 'postDataMK']);
+Route::post('datapostta', [TahunAjaranController::class, 'postDataTahunAjaran']);
+Route::post('datapostkurikulum', [KurikulumController::class, 'postDataKurikulum']);
 
 
 
-Route::post('login',[UserController::class,'login']);
-Route::get('/dashboarddosen/capaianpembelajaran/{nim}',[MahasiswaController::class,'getMahasiswa']);
-Route::get('dashboardmhs/pencapaian',[CapaianMahasiswa::class,'capaianmahasiswa']);
-Route::get('mahasiswa',[MahasiswaController::class,'index']);
-Route::get('mahasiswa/indexTa',[MahasiswaController::class,'indexTa']);
-Route::get('dashboardmhs/filtersemester',[CapaianMahasiswa::class,'filtersemester']);
-Route::get('dashboardmhs/getIdCpl',[CapaianMahasiswa::class,'getIdCpl']);
-Route::get('dashboardmhs/getBobotCpl',[CapaianMahasiswa::class,'getBobotCpl']);
+Route::post('login', [UserController::class, 'login']);
+Route::get('/dashboarddosen/capaianpembelajaran/{nim}', [MahasiswaController::class, 'getMahasiswa']);
+Route::get('dashboardmhs/pencapaian', [CapaianMahasiswa::class, 'capaianmahasiswa']);
+Route::get('dashboardmhs/totalNilaiCplPerIdCpl', [CapaianMahasiswa::class, 'getTotalNilaiCPLPerIdCPL']);
+Route::get('mahasiswa', [MahasiswaController::class, 'index']);
+Route::get('mahasiswa/indexTa', [MahasiswaController::class, 'indexTa']);
+Route::get('dashboardmhs/filtersemester', [CapaianMahasiswa::class, 'filtersemester']);
+Route::get('dashboardmhs/getIdCpl', [CapaianMahasiswa::class, 'getIdCpl']);
+Route::get('dashboardmhs/getBobotCpl', [CapaianMahasiswa::class, 'getBobotCpl']);
 Route::get('/mataKuliahBySemesterType', [MataKuliahController::class, 'getMataKuliahBySemesterType']);
 Route::post('/upload', [NilaiController::class, 'upload']);
 Route::get('/tahun-ajaran-data', [TahunAjaranController::class, 'index']);
