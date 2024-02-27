@@ -81,8 +81,7 @@ class DPNA extends Model
         $nilai_mk = $nilai_bobot_mk / $total_bobot_mk;
         $nilai_bobot_cpmk = $nilai_mk * $bobot_cpmk;
 
-        $total_nilai_cpmk = $nilai_bobot_cpmk / $total_bobot_cpmk;
-        $nilai_cpl = ($total_nilai_cpmk * $bobot_cpl) / 100;
+        $nilai_cpl = $nilai_bobot_cpmk / $total_bobot_cpmk;        
 
 
         // Buat record baru di tabel Trxdpna
