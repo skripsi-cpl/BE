@@ -56,6 +56,7 @@ Route::post('login', [UserController::class, 'login']);
 Route::get('/dashboarddosen/capaianpembelajaran/{nim}', [MahasiswaController::class, 'getMahasiswa']);
 Route::get('dashboardmhs/pencapaian', [CapaianMahasiswa::class, 'capaianmahasiswa']);
 Route::get('dashboardmhs/totalNilaiCplPerIdCpl', [CapaianMahasiswa::class, 'getTotalNilaiCPLPerIdCPL']);
+Route::get('dashboardmhs/totalNilaiCplAll', [CapaianMahasiswa::class, 'getTotalNilaiCPLAll']);
 Route::get('generatepdf/getData', [CapaianMahasiswa::class, 'getDataGeneratePdf']);
 Route::get('mahasiswa', [MahasiswaController::class, 'index']);
 Route::get('mahasiswa/indexTa', [MahasiswaController::class, 'indexTa']);

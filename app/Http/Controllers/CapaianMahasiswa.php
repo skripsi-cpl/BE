@@ -67,6 +67,28 @@ class CapaianMahasiswa extends Controller
         }
     }
 
+    public function getTotalNilaiCPLAll(Request $request)
+    {
+        $data = CpmkMk::from('trxdpna as trx')
+            ->select('trx.NIM', 'cl.nama_cpl', 'cl.id_cpl', DB::raw('SUM(trx.nilai_cpl) as total_nilai_cpl'))
+            ->join('cpl as cl', 'cl.id_cpl', '=', 'trx.id_cpl') // Gabungkan dengan tabel cpl // Mengambil id_cpl dan jumlah nilai_cpl
+            ->groupBy('cl.id_cpl', 'cl.nama_cpl', 'trx.NIM') // Mengelompokkan berdasarkan id_cpl
+            ->get();
+
+        if ($data->count() > 0) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Query berhasil!',
+                'data' => $data
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak ada data yang ditemukan!'
+            ]);
+        }
+    }
+
     public function getDataGeneratePdf(Request $request)
     {
 
