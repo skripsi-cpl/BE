@@ -67,6 +67,7 @@ Route::get('dashboardmhs/getBobotCpl', [CapaianMahasiswa::class, 'getBobotCpl'])
 Route::get('/mataKuliahBySemesterType', [MataKuliahController::class, 'getMataKuliahBySemesterType']);
 Route::post('/upload', [NilaiController::class, 'upload']);
 Route::get('/tahun-ajaran-data', [TahunAjaranController::class, 'index']);
+Route::get('/cpl-by-nim', [TrxdpnaController::class, 'getCPLByNIM']);
 Route::get('/kelas', [KelasController::class, 'index']);
 Route::get('/status', [StatusController::class, 'index']);
 Route::get('/cek-status-upload', [UploadStatusController::class, 'checkStatus']);
