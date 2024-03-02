@@ -26,7 +26,8 @@ class MahasiswaController extends Controller
                     'mhs.nama_mhs',
                     'mhs.tahun_masuk',
                     'ta.periode',
-                    'dsn.nama_dosen as nama_wali' 
+                    'dsn.nama_dosen as nama_wali' ,
+                    'dsn.kode_wali'
                 )
                 ->get();
         return response()->json($data); 
@@ -73,7 +74,12 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::where('nim', $nim)->first();
         return response()->json($mahasiswa);
     }
+    public function getMahasiswaByKodeWali($kode_wali)
+    {
+        $mahasiswa = Mahasiswa::where('kode_wali', $kode_wali)->get();
 
+        return response()->json($mahasiswa);
+    }
 
 
 }

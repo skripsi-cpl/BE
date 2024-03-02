@@ -55,6 +55,7 @@ Route::post('datapostkurikulum', [KurikulumController::class, 'postDataKurikulum
 Route::post('login', [UserController::class, 'login']);
 Route::get('/dashboarddosen/capaianpembelajaran/{nim}', [MahasiswaController::class, 'getMahasiswa']);
 Route::get('dashboardmhs/pencapaian', [CapaianMahasiswa::class, 'capaianmahasiswa']);
+Route::get('/mahasiswa-by-kode-wali/{kode_wali}', [MahasiswaController::class, 'getMahasiswaByKodeWali']);
 Route::get('dashboardmhs/totalNilaiCplPerIdCpl', [CapaianMahasiswa::class, 'getTotalNilaiCPLPerIdCPL']);
 Route::get('dashboardmhs/totalNilaiCplAll', [CapaianMahasiswa::class, 'getTotalNilaiCPLAll']);
 Route::get('generatepdf/getData', [CapaianMahasiswa::class, 'getDataGeneratePdf']);
