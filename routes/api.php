@@ -56,12 +56,14 @@ Route::post('login', [UserController::class, 'login']);
 Route::get('/dashboarddosen/capaianpembelajaran/{nim}', [MahasiswaController::class, 'getMahasiswa']);
 Route::get('dashboardmhs/pencapaian', [CapaianMahasiswa::class, 'capaianmahasiswa']);
 Route::get('dashboardmhs/totalNilaiCplPerIdCpl', [CapaianMahasiswa::class, 'getTotalNilaiCPLPerIdCPL']);
+Route::get('dashboardmhs/totalNilaiCpl', [CapaianMahasiswa::class, 'getTotalNilaiCPL']);
 Route::get('dashboardmhs/totalNilaiCplAll', [CapaianMahasiswa::class, 'getTotalNilaiCPLAll']);
 Route::get('generatepdf/getData', [CapaianMahasiswa::class, 'getDataGeneratePdf']);
 Route::get('mahasiswa', [MahasiswaController::class, 'index']);
 Route::get('mahasiswa/indexTa', [MahasiswaController::class, 'indexTa']);
 Route::get('dashboardmhs/filtersemester', [CapaianMahasiswa::class, 'filtersemester']);
 Route::get('dashboardmhs/getIdCpl', [CapaianMahasiswa::class, 'getIdCpl']);
+Route::get('/cpl-by-nim', [TrxdpnaController::class, 'getCPLByNIM']);
 Route::get('dashboardmhs/getBobotCpl', [CapaianMahasiswa::class, 'getBobotCpl']);
 
 Route::get('/mataKuliahBySemesterType', [MataKuliahController::class, 'getMataKuliahBySemesterType']);

@@ -12,8 +12,6 @@ class TrxdpnaController extends Controller
     public function getCPLByNIM(Request $request)
     {
         $nim = $request->input('nim');
-
-        
         if (!$nim) {
             return response()->json([
                 'success' => false,
@@ -27,16 +25,6 @@ class TrxdpnaController extends Controller
                     ->where('NIM', $nim)
                     ->groupBy('NIM')
                     ->get();
-
-        
-        if ($cplData->isEmpty()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Data tidak ditemukan untuk NIM tersebut',
-                'data' => null
-            ], 404);
-        }
-
         return response()->json([
             'success' => true,
             'message' => 'Total CPL untuk NIM ' . $nim . ' berhasil diambil',
