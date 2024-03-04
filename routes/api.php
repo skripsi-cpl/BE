@@ -55,6 +55,7 @@ Route::post('datapostkurikulum', [KurikulumController::class, 'postDataKurikulum
 Route::post('login', [UserController::class, 'login']);
 Route::get('/dashboarddosen/capaianpembelajaran/{nim}', [MahasiswaController::class, 'getMahasiswa']);
 Route::get('dashboardmhs/pencapaian', [CapaianMahasiswa::class, 'capaianmahasiswa']);
+Route::get('/mahasiswa-by-kode-wali/{kode_wali}', [MahasiswaController::class, 'getMahasiswaByKodeWali']);
 Route::get('dashboardmhs/totalNilaiCplPerIdCpl', [CapaianMahasiswa::class, 'getTotalNilaiCPLPerIdCPL']);
 Route::get('dashboardmhs/totalNilaiCpl', [CapaianMahasiswa::class, 'getTotalNilaiCPL']);
 Route::get('dashboardmhs/totalNilaiCplAll', [CapaianMahasiswa::class, 'getTotalNilaiCPLAll']);
@@ -69,6 +70,7 @@ Route::get('dashboardmhs/getBobotCpl', [CapaianMahasiswa::class, 'getBobotCpl'])
 Route::get('/mataKuliahBySemesterType', [MataKuliahController::class, 'getMataKuliahBySemesterType']);
 Route::post('/upload', [NilaiController::class, 'upload']);
 Route::get('/tahun-ajaran-data', [TahunAjaranController::class, 'index']);
+Route::get('/cpl-by-nim', [TrxdpnaController::class, 'getCPLByNIM']);
 Route::get('/kelas', [KelasController::class, 'index']);
 Route::get('/status', [StatusController::class, 'index']);
 Route::get('/cek-status-upload', [UploadStatusController::class, 'checkStatus']);

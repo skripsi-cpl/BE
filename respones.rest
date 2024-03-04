@@ -42,3 +42,5 @@ content-type: application/json
     "email": "if_departemen@departemen.undip.ac.id",
     "password": "departemen1234"
 }
+ ###
+ GET http://localhost:8000/api/mahasiswa-by-kode-wali/001
