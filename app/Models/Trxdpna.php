@@ -20,7 +20,8 @@ class Trxdpna extends Model
         'id_cpmk_mk',
         'id_kurikulum',
         'id_TA',
-        'nilai_cpl'
+        'nilai_cpl',
+        'nilai_cpl_skalar',
     ];
 
 

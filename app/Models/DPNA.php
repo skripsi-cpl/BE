@@ -81,7 +81,8 @@ class DPNA extends Model
         $nilai_mk = $nilai_bobot_mk / $total_bobot_mk;
         $nilai_bobot_cpmk = $nilai_mk * $bobot_cpmk;
 
-        $nilai_cpl = $nilai_bobot_cpmk / $total_bobot_cpmk;        
+        $nilai_cpl_skalar = $nilai_bobot_cpmk / $total_bobot_cpmk;        
+        $nilai_cpl = ($nilai_cpl_skalar * $bobot_cpl) / 100;
 
 
         // Buat record baru di tabel Trxdpna
@@ -97,6 +98,7 @@ class DPNA extends Model
             'id_kurikulum' => $id_kurikulum,
             'id_TA' => $id_TA,
             'nilai_cpl' => $nilai_cpl,
+            'nilai_cpl_skalar' => $nilai_cpl_skalar,
             // Tambahkan kolom lain yang sesuai
         ]);
     }
