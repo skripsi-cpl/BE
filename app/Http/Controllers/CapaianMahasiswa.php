@@ -155,7 +155,7 @@ class CapaianMahasiswa extends Controller
     public function getIdCpl()
     {
         $data = CapaianPembelajaran::from('cpl')
-            ->select('id_cpl')
+            ->select('id_cpl', 'nama_cpl')
             ->get();
         return $data;
     }

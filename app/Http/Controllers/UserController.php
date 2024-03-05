@@ -44,8 +44,9 @@ class UserController extends Controller
         if ($domain === 'students.undip.ac.id' && $student) {
             $name = $student->nama_mhs;
             $nim = $student->NIM;
+            $angkatan = $student->tahun_masuk;
 
-            return ["redirectTo" => "dashboard-mahasiswa","name" => $name,"nim" =>$nim ,"role" => "mahasiswa"] ;
+            return ["redirectTo" => "dashboard-mahasiswa","name" => $name,"nim" =>$nim ,"role" => "mahasiswa","angkatan" =>$angkatan ] ;
         } elseif ($domain === 'lecturer.undip.ac.id' && $lecturer) {
 
             $name = $lecturer->nama_dosen;
