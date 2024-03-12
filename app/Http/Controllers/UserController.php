@@ -44,22 +44,23 @@ class UserController extends Controller
         if ($domain === 'students.undip.ac.id' && $student) {
             $name = $student->nama_mhs;
             $nim = $student->NIM;
+            $angkatan = $student->tahun_masuk;
 
-            return ["redirectTo" => "dashboardmhs","name" => $name,"nim" =>$nim ,"role" => "mahasiswa"] ;
+            return ["redirectTo" => "dashboard-mahasiswa","name" => $name,"nim" =>$nim ,"role" => "mahasiswa","angkatan" =>$angkatan ] ;
         } elseif ($domain === 'lecturer.undip.ac.id' && $lecturer) {
-            
+
             $name = $lecturer->nama_dosen;
             $nip = $lecturer->NIP;
             $kode_wali = $lecturer->kode_wali;
             $totalMahasiswa = Mahasiswa::where('kode_wali', $lecturer->kode_wali)
             ->count();
-            return ["redirectTo" => "dashboarddosen","name" => $name,"nip" =>$nip ,"role" => "dosen","kode"=>$kode_wali,"totalMahasiswa"=>$totalMahasiswa];
+            return ["redirectTo" => "dashboard-dosen","name" => $name,"nip" =>$nip ,"role" => "dosen","kode"=>$kode_wali,"totalMahasiswa"=>$totalMahasiswa];
         } elseif ($domain === 'departemen.undip.ac.id') {
             $name = $user->email;
             $totalMahasiswa = Mahasiswa::count();
             $totalMK= MataKuliah::count();
             $totalDosen = Dosen::count();
-            return ["redirectTo" => "dashboarddepartment","name" => $name, "role" => "departemen","totalDosen"=>$totalDosen,"totalMahasiswa"=>$totalMahasiswa,"totalMK"=>$totalMK];
+            return ["redirectTo" => "dashboard-departemen","name" => $name, "role" => "departemen","totalDosen"=>$totalDosen,"totalMahasiswa"=>$totalMahasiswa,"totalMK"=>$totalMK];
         } elseif ($domain === 'operator.undip.ac.id') {
             $name = $user->email;
             $totalMahasiswa = Mahasiswa::count();

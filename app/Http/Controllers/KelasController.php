@@ -42,5 +42,14 @@ class KelasController extends Controller
     
         return response()->json($kelasWithStatus);
     }
+
+    public function storeKelasData(Request $request) {
+        $kelas = new Kelas;
+        $kelas->nama_kelas = $request->nama_kelas;
+        $kelas->status_upload = $request->status_upload;
+        $kelas->user_input = $request->user()->name; 
+        $kelas->save();
     
+        return response()->json($kelas);
+    }
 }    
