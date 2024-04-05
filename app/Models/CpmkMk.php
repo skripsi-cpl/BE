@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CpmkMk extends Model
 {
     protected $table = 'cpmk_mk';
+    protected $primaryKey = 'id_cpmk_mk';
 
     protected $fillable = [
         'id_cpmk_mk',

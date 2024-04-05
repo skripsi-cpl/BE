@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CapaianPembelajaran extends Model
 {
     protected $table = 'cpl';
+    protected $primaryKey = 'id_cpl';
     /**
      * The attributes that are mass assignable.
      *

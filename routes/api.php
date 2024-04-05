@@ -49,6 +49,20 @@ Route::post('datapostmk', [CapaianPembelajaranController::class, 'postDataMK']);
 Route::post('datapostta', [TahunAjaranController::class, 'postDataTahunAjaran']);
 Route::post('datapostkurikulum', [KurikulumController::class, 'postDataKurikulum']);
 
+//post delete data
+Route::delete('datadeletepl/{id_pl}', [CapaianPembelajaranController::class, 'deleteDataPL']);
+Route::delete('datadeletecpl/{id_cpl}', [CapaianPembelajaranController::class, 'deleteDataCPL']);
+Route::delete('datadeletecpmk/{id_cpmk}', [CapaianPembelajaranController::class, 'deleteDataCPMK']);
+Route::delete('datadeletecpmkmk/{id_cpmk_mk}', [CapaianPembelajaranController::class, 'deleteDataCPMKMK']);
+
+// Route untuk update data
+Route::put('dataupdatepl/{id_pl}', [CapaianPembelajaranController::class, 'updateDataPL']);
+Route::put('dataupdatecpl/{id_cpl}', [CapaianPembelajaranController::class, 'updateDataCPL']);
+Route::put('dataupdatecpmk/{id_cpmk}', [CapaianPembelajaranController::class, 'updateDataCPMK']);
+Route::put('dataupdatecpmkmk/{id_cpmk_mk}', [CapaianPembelajaranController::class, 'updateDataCPMKMK']);
+
+
+
 
 
 

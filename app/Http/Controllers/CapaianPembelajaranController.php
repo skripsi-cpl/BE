@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\ProfileLulusan;
 use App\Models\CapaianMatakuliah;
 use App\Models\CapaianPembelajaran;
@@ -41,14 +42,14 @@ class CapaianPembelajaranController extends Controller
             'bobot_cpl' => $validatedData['bobot_cpl'],
             'id_pl' => $validatedData['id_pl'],
         ]);
-        
+
         $capaianMatakuliah = CapaianMatakuliah::create([
             'id_cpmk' => $validatedData['id_cpmk'],
             'nama_cpmk' => $validatedData['nama_cpmk'],
             'bobot_cpmk' => $validatedData['bobot_cpmk'],
             'id_cpl' => $validatedData['id_cpl'],
         ]);
-        
+
         $mataKuliah = CpmkMk::create([
             'id_cpmk_mk' => $validatedData['id_cpmk_mk'],
             'id_cpmk' => $validatedData['id_cpmk'],
@@ -66,7 +67,8 @@ class CapaianPembelajaranController extends Controller
         ], 201); // 201 menunjukkan "Created" status code
     }
 
-    public function postDataPL(Request $request){
+    public function postDataPL(Request $request)
+    {
         $validateData = $request->validate([
             'id_pl' => 'required',
             'nama_pl' => 'required',
@@ -85,7 +87,8 @@ class CapaianPembelajaranController extends Controller
         ], 201);
     }
 
-    public function postDataCPL(Request $request){
+    public function postDataCPL(Request $request)
+    {
         $validateData = $request->validate([
             'id_cpl' => 'required',
             'nama_cpl' => 'required',
@@ -106,7 +109,8 @@ class CapaianPembelajaranController extends Controller
         ], 201);
     }
 
-    public function postDataCPMK(Request $request){
+    public function postDataCPMK(Request $request)
+    {
         $validateData = $request->validate([
             'id_cpmk' => 'required',
             'nama_cpmk' => 'required',
@@ -115,7 +119,7 @@ class CapaianPembelajaranController extends Controller
         ]);
 
         $createCPMK = CapaianMatakuliah::create([
-            'id_cpmk' => $validateData['id_cpl'] . $validateData['id_cpmk'] ,
+            'id_cpmk' => $validateData['id_cpl'] . $validateData['id_cpmk'],
             'nama_cpmk' => $validateData['nama_cpmk'],
             'bobot_cpmk' => $validateData['bobot_cpmk'],
             'id_cpl' => $validateData['id_cpl'],
@@ -127,14 +131,15 @@ class CapaianPembelajaranController extends Controller
         ], 201);
     }
 
-    public function postDataMK(Request $request){
+    public function postDataMK(Request $request)
+    {
         $validateData = $request->validate([
             'id_cpmk' => 'required',
             'id_mk' => 'required',
             'bobot_mk' => 'required',
         ]);
         $id_cpmk_mk = $validateData['id_cpmk'] . $validateData['id_mk'];
-        
+
         $createMK = CpmkMk::create([
             'id_cpmk_mk' => $id_cpmk_mk,
             'id_cpmk' => $validateData['id_cpmk'],
@@ -148,31 +153,166 @@ class CapaianPembelajaranController extends Controller
         ], 201);
     }
 
-    public function getDataPL(){
+    public function getDataPL()
+    {
         $data = ProfileLulusan::all();
         return response()->json($data);
     }
-    public function getDataCPL(){
-        $data = CapaianPembelajaran::join('pl','cpl.id_pl','=','pl.id_pl')
-        ->select('cpl.id_cpl','cpl.nama_cpl','cpl.bobot_cpl','pl.id_pl','pl.nama_pl')
-        ->get();
+    public function getDataCPL()
+    {
+        $data = CapaianPembelajaran::join('pl', 'cpl.id_pl', '=', 'pl.id_pl')
+            ->select('cpl.id_cpl', 'cpl.nama_cpl', 'cpl.bobot_cpl', 'pl.id_pl', 'pl.nama_pl')
+            ->get();
         return response()->json($data);
     }
-    public function getDataCPMK(){
-        $data = CapaianMatakuliah::join('cpl','cpmk.id_cpl','=','cpl.id_cpl')
-        ->select('cpmk.id_cpmk','cpmk.nama_cpmk','cpmk.bobot_cpmk','cpl.id_cpl','cpl.nama_cpl')
-        ->get();
+    public function getDataCPMK()
+    {
+        $data = CapaianMatakuliah::join('cpl', 'cpmk.id_cpl', '=', 'cpl.id_cpl')
+            ->select('cpmk.id_cpmk', 'cpmk.nama_cpmk', 'cpmk.bobot_cpmk', 'cpl.id_cpl', 'cpl.nama_cpl')
+            ->get();
         return response()->json($data);
     }
-    public function getDataMK(){
-        $data = CpmkMk::join('cpmk','cpmk_mk.id_cpmk','=','cpmk.id_cpmk')
-        ->join('mata_kuliah','cpmk_mk.id_mk','=','mata_kuliah.id_mk')
-        ->select('cpmk.id_cpmk','cpmk.bobot_cpmk','mata_kuliah.id_mk','cpmk_mk.id_cpmk_mk','cpmk_mk.bobot_mk')
-        ->get();
+    public function getDataMK()
+    {
+        $data = CpmkMk::join('cpmk', 'cpmk_mk.id_cpmk', '=', 'cpmk.id_cpmk')
+            ->join('mata_kuliah', 'cpmk_mk.id_mk', '=', 'mata_kuliah.id_mk')
+            ->get();
         return response()->json($data);
     }
-    public function getDataMataKuliah(){
+    public function getDataMataKuliah()
+    {
         $data = MataKuliah::all();
         return response()->json($data);
+    }
+
+    //delete data
+    public function deleteDataPL($id_pl)
+    {
+        $pl = ProfileLulusan::where('id_pl', $id_pl)->firstOrFail();
+        $pl->delete();
+        return response()->json([
+            'message' => 'Data PL has been successfully deleted!',
+        ], 200);
+    }
+
+    public function deleteDataCPL($id_cpl)
+    {
+        $cpl = CapaianPembelajaran::where('id_cpl', $id_cpl)->firstOrFail();
+        $cpl->delete();
+
+        return response()->json([
+            'message' => 'Data CPL has been successfully deleted!',
+        ], 200);
+    }
+
+    public function deleteDataCPMK($id_cpmk)
+    {
+        $cpmk = CapaianMatakuliah::where('id_cpmk', $id_cpmk)->firstOrFail();
+        $cpmk->delete();
+
+        return response()->json([
+            'message' => 'Data CPMK has been successfully deleted!',
+        ], 200);
+    }
+
+    public function deleteDataCPMKMK($id_cpmk_mk)
+    {
+        $cpmkMk = CpmkMk::where('id_cpmk_mk', $id_cpmk_mk)->firstOrFail();
+        $cpmkMk->delete();
+
+        return response()->json([
+            'message' => 'Data CPMKMK has been successfully deleted!',
+        ], 200);
+    }
+    public function updateDataPL(Request $request, $id_pl)
+    {
+        $pl = ProfileLulusan::where('id_pl', $id_pl)->firstOrFail();
+
+        // Validasi input (sesuaikan dengan kebutuhan Anda)
+        $validatedData = $request->validate([
+            'nama_pl' => 'required|string|max:255',
+            'bobot_pl' => 'required|numeric',
+        ]);
+
+        // Update data
+        $pl->update([
+            'nama_pl' => $validatedData['nama_pl'],
+            'bobot_pl' => $validatedData['bobot_pl'],
+        ]);
+
+        return response()->json([
+            'message' => 'Data PL has been successfully updated!',
+            'data' => $pl // Data yang telah di-update
+        ], 200);
+    }
+
+    public function updateDataCPL(Request $request, $id_cpl)
+    {
+        $cpl = CapaianPembelajaran::where('id_cpl', $id_cpl)->firstOrFail();
+
+        // Validasi input (sesuaikan dengan kebutuhan Anda)
+        $validatedData = $request->validate([
+            'nama_cpl' => 'required|string|max:255',
+            'bobot_cpl' => 'required|numeric',
+        ]);
+
+        // Update data
+        $cpl->update([
+            'nama_cpl' => $validatedData['nama_cpl'],
+            'bobot_cpl' => $validatedData['bobot_cpl'],
+        ]);
+
+        return response()->json([
+            'message' => 'Data PL has been successfully updated!',
+            'data' => $cpl // Data yang telah di-update
+        ], 200);
+    }
+    public function updateDataCPMK(Request $request, $id_cpmk)
+    {
+        $cpmk = CapaianMatakuliah::where('id_cpmk', $id_cpmk)->firstOrFail();
+
+        // Validasi input (sesuaikan dengan kebutuhan Anda)
+        $validatedData = $request->validate([
+            'nama_cpmk' => 'required|string|max:255',
+            'bobot_cpmk' => 'required|numeric',
+        ]);
+
+        // Update data
+        $cpmk->update([
+            'nama_cpmk' => $validatedData['nama_cpmk'],
+            'bobot_cpmk' => $validatedData['bobot_cpmk'],
+        ]);
+
+        return response()->json([
+            'message' => 'Data PL has been successfully updated!',
+            'data' => $cpmk // Data yang telah di-update
+        ], 200);
+    }
+
+    public function updateDataCPMKMK(Request $request, $id_cpmk_mk)
+    {
+        $cpmkmk = CpmkMk::join('cpmk', 'cpmk_mk.id_cpmk', '=', 'cpmk.id_cpmk')
+        ->join('mata_kuliah', 'cpmk_mk.id_mk', '=', 'mata_kuliah.id_mk')
+        ->where('cpmk_mk.id_cpmk_mk', $id_cpmk_mk)
+        ->first();
+
+        // Validasi input (sesuaikan dengan kebutuhan Anda)
+        $validatedData = $request->validate([
+            'kode_mk' => 'required|string|max:20',
+            'nama_mk' => 'required|string|max:255',
+            'bobot_mk' => 'required|numeric',
+        ]);
+
+        // Update data
+        $cpmkmk->update([
+            'kode_mk' => $validatedData['kode_mk'],
+            'nama_mk' => $validatedData['nama_mk'],
+            'bobot_mk' => $validatedData['bobot_mk'],
+        ]);
+
+        return response()->json([
+            'message' => 'Data cpmkmk has been successfully updated!',
+            'data' => $cpmkmk // Data yang telah di-update
+        ], 200);
     }
 }

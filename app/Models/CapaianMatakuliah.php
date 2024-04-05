@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CapaianMatakuliah extends Model
 {
     protected $table = 'cpmk';
+    protected $primaryKey = 'id_cpmk';
 
     protected $fillable = [
         'id_cpmk',
