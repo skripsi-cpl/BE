@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProfileLulusan extends Model
 {
     protected $table = 'pl';
+    protected $primaryKey = 'id_pl';
     /**
      * The attributes that are mass assignable.
      *
