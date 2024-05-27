@@ -12,21 +12,19 @@ use Illuminate\Support\Facades\DB;
 
 class CapaianMahasiswa extends Controller
 {
-    public function capaianmahasiswa(Request $request)
+    public function     capaianmahasiswa(Request $request)
     {
         $semester = $request->input('semester_mk');
         $nim = $request->input('NIM');
 
         $data = CpmkMk::from('trxdpna as trx')
-            ->select('mk.kode_mk', 'mk.nama_mk', 'mk.sks', 'ck.id_cpl', 'trx.nilai_cpl_skalar', 'mk.semester_mk')
+            ->select('mk.kode_mk', 'mk.nama_mk', 'mk.sks', 'ck.id_cpl', 'trx.nilai_cpl', 'mk.semester_mk','cl.bobot_cpl')
             ->join('mata_kuliah as mk', 'mk.id_mk', '=', 'trx.id_mk') // Gabungkan dengan tabel matakuliah
             ->join('cpmk as ck', 'ck.id_cpmk', '=', 'trx.id_cpmk') // Gabungkan dengan tabel cpmk
             ->join('cpl as cl', 'cl.id_cpl', '=', 'trx.id_cpl') // Gabungkan dengan tabel cpl
             ->where('mk.semester_mk', $semester)
             ->where('trx.NIM', $nim)
             ->get();
-
-
 
         if ($data->count() > 0) {
             return response()->json([
@@ -46,7 +44,7 @@ class CapaianMahasiswa extends Controller
     {
         $nim = $request->input('NIM');
         $data = CpmkMk::from('trxdpna as trx')
-            ->select('cl.nama_cpl', 'cl.id_cpl', DB::raw('SUM(trx.nilai_cpl_skalar) as total_nilai_cpl'))
+            ->select('cl.nama_cpl', 'cl.id_cpl', DB::raw('SUM(trx.nilai_cpl) as total_nilai_cpl'))
             ->join('cpl as cl', 'cl.id_cpl', '=', 'trx.id_cpl') // Gabungkan dengan tabel cpl // Mengambil id_cpl dan jumlah nilai_cpl
             ->groupBy('cl.id_cpl', 'cl.nama_cpl') // Mengelompokkan berdasarkan id_cpl
             ->where('trx.NIM', $nim)
@@ -160,14 +158,16 @@ class CapaianMahasiswa extends Controller
         return $data;
     }
     public function getBobotCpl()
-    {
-        $data = CpmkMk::from('cpmk_mk as cmk')
-            ->select('mk.nama_mk',  'ck.id_cpl', 'cl.bobot_cpl')
-            ->join('mata_kuliah as mk', 'mk.id_mk', '=', 'cmk.id_mk')
-            ->join('cpmk as ck', 'cmk.id_cpmk', '=', 'ck.id_cpmk')
-            ->join('cpl as cl', 'ck.id_cpl', '=', 'cl.id_cpl')
-            ->join('mahasiswa_mata_kuliah as mhsmk', 'mhsmk.id_mk', '=', 'mk.id_mk')
-            ->get();
-        return $data;
-    }
+{
+    $data = CpmkMk::from('cpmk_mk as cmk')
+        ->select('mk.nama_mk', 'ck.id_cpl', 'cl.bobot_cpl')
+        ->join('mata_kuliah as mk', 'mk.id_mk', '=', 'cmk.id_mk')
+        ->join('cpmk as ck', 'cmk.id_cpmk', '=', 'ck.id_cpmk')
+        ->join('cpl as cl', 'ck.id_cpl', '=', 'cl.id_cpl')
+        ->join('mahasiswa_mata_kuliah as mhsmk', 'mhsmk.id_mk', '=', 'mk.id_mk')
+        ->get();
+
+    return response()->json($data);
+}
+
 }

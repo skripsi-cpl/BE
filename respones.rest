@@ -42,5 +42,8 @@ content-type: application/json
     "email": "if_departemen@departemen.undip.ac.id",
     "password": "departemen1234"
 }
- ###
- GET http://localhost:8000/api/mahasiswa-by-kode-wali/001
+###
+GET http://localhost:8000/api/dashboardmhs/getBobotCpl
+
+###
+GET http://localhost:8000/api/dashboardmhs/pencapaian?NIM=25000122410031&semester_mk=2
